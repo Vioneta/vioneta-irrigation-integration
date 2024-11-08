@@ -1,0 +1,13 @@
+__pycache__
+.pytest*
+pythonenv*
+venv
+.venv
+.coverage
+Thumbs.db
+**/card
+**/custom_components/hacs
+**/custom_components/pyscript
+config/*
+tests/configs/test_config.yaml
+tests/test_config.py

@@ -1,0 +1,23 @@
+default_config:
+
+logger:
+  default: info
+  logs:
+    custom_components.irrigation_unlimited: debug
+
+# debugpy:
+#   start: true
+#   wait: true
+
+irrigation_unlimited:
+  controllers:
+    zones:
+      schedules:
+        - time: '06:10'
+          duration: '00:10'
+    sequences:
+      schedules:
+        - time: '07:10'
+      zones:
+        - zone_id: 1
+          duration: "00:10"

@@ -1,0 +1,203 @@
+default_config:
+
+irrigation_unlimited:
+  granularity: 10
+  refresh_interval: 20
+  testing:
+    enabled: false
+    speed: 60.0
+    times:
+      - name: 'Test 1'
+        start: '2021-01-04 05:00'
+        end: '2021-01-11 07:30'
+      - name: 'Test 2'
+        start: '2021-01-01 05:00'
+        end: '2021-01-01 05:30'
+  controllers:
+    - name: 'Controller 1'
+      zones:
+        - schedules:
+          - time: '07:00'
+            duration: '00:10'
+            weekday: [mon, tue, wed]
+            month: [jan, feb, mar]
+            day: 'even'
+    - name: 'Controller 2'
+      entity_id: 'switch.my_master_switch'
+      enabled: true
+      preamble: '00:02'
+      postamble: '00:02'
+      zones:
+        - name: 'Example schedules'
+          entity_id: 'switch.my_zone_switch'
+          enabled: true
+          minimum: '00:02'
+          maximum: '01:00'
+          schedules:
+            - name: 'Before sunrise'
+              time:
+                sun: 'sunrise'
+                before: '00:20'
+              duration: '00:30'
+            - name: 'After sunset'
+              time:
+                sun: 'sunset'
+                after: '00:30'
+              duration: '00:20'
+            - name: 'Overlapping 1'
+              time: '05:45'
+              duration: '00:30'
+            - name: 'Overlaping 2'
+              time: '06:00'
+              duration: '00:30'
+            - name: 'Lazy Summer Sunday Afternoons'
+              time: '12:00'
+              duration: '00:10'
+              month: [dec, jan, feb]
+              weekday: [sun]
+            - name: 'Watering on odd days only'
+              time: '08:00'
+              duration: '00:20'
+              day: 'odd'
+            - name: 'Golden days'
+              time: '08:30'
+              duration: '00:10'
+              day: [1, 2, 3, 5, 8, 13, 21]
+            - name: 'Never on a Sunday'
+              time: '09:00'
+              duration: '00:05'
+              weekday: [mon, tue, wed, thu, fri, sat]
+            - name: 'Happy New Year'
+              time: '00:00'
+              duration: '00:10'
+              month: [jan]
+              day: [1]
+            - name: 'Long hand'
+              time: '13:00'
+              duration:
+                minutes: 10
+              weekday:
+                - mon
+                - wed
+                - thu
+              month:
+                - jan
+                - feb
+              day:
+                - 1
+                - 5
+                - 10
+        - name: 'Overlapped Zone'
+          schedules:
+            - name: 'Overlaps with Zone 1'
+              time: '05:50'
+              duration: '00:20'
+    - name: "Fundos"
+      zones:
+        - name: "Gramado"
+          entity_id: "switch.irrigacao_grama"
+        - name: "Lateral"
+          entity_id: "switch.irrigacao_lateral"
+        - name: "Corredor"
+          entity_id: "switch.irrigacao_corredor"
+        - name: "Horta"
+          entity_id: "switch.irrigacao_horta"
+      sequences:
+        - name: "Run 1"
+          delay: "00:00:10"
+          schedules:
+            - name: "Alvorada"
+              time:
+                sun: "sunrise"
+            - name: "Por do Sol"
+              time:
+                sun: "sunset"
+                after: "00:30"
+          zones:
+            - zone_id: 1
+              duration: "00:10"
+            - zone_id: 2
+              duration: "00:02"
+            - zone_id: 3
+              duration: "00:01"
+            - zone_id: 4
+              duration: "00:06"
+        - name: "Run 2"
+          delay: "00:00:10"
+          schedules:
+            - name: "Midday"
+              time: "12:00"
+          zones:
+            - zone_id: 2
+              duration: "00:02"
+            - zone_id: 3
+              duration: "00:01"
+        - name: "Split soaker"
+          duration: "00:02"
+          delay: "00:05"
+          repeat: 3
+          schedules:
+            - name: "Morning"
+              time: "05:30"
+          zones:
+            - zone_id: 2
+        - name: "On the hour from 5am to 5pm"
+          duration: "00:05"
+          delay: "00:55"
+          repeat: 12
+          schedules:
+            - time: "05:00"
+          zones:
+            - zone_id: 3
+        - name: "Multi zone"
+          duration: "00:02"
+          delay: "00:01"
+          schedules:
+            - time: "03:15"
+          zones:
+            - zone_id: 1
+            - zone_id: 2
+            - zone_id: [1,2]
+            - zone_id: 3
+    - name: 'Sequenced Controller'
+      zones:
+        - name: Station 1
+        - name: Station 2
+        - name: Station 3
+        - name: Station 4
+        - name: Station 5
+        - name: Station 6
+      sequences:
+      - name: "Program A"
+        schedules:
+          - time: "19:15"
+            day:
+              every_n_days: 3
+              start_n_days: 2022-01-01
+        zones:
+        - zone_id: 1
+          duration: "00:10"
+        - zone_id: 2
+          duration: "00:10"
+      - name: "Program B"
+        schedules:
+          - time: "19:15"
+            day:
+              every_n_days: 3
+              start_n_days: 2022-01-02
+        zones:
+        - zone_id: 3
+          duration: "00:10"
+        - zone_id: 4
+          duration: "00:10"
+      - name: "Program C"
+        schedules:
+          - time: "19:15"
+            day:
+              every_n_days: 3
+              start_n_days: 2022-01-03
+        zones:
+        - zone_id: 5
+          duration: "00:10"
+        - zone_id: 6
+          duration: "00:10"

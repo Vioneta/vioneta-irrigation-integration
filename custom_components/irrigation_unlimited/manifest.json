@@ -1,0 +1,19 @@
+{
+  "domain": "irrigation_unlimited",
+  "name": "Vione Irrigation Integration",
+  "codeowners": [
+    "@Vioneta"
+  ],
+  "config_flow": false,
+  "dependencies": [
+    "recorder",
+    "history"
+  ],
+  "documentation": "https://github.com/Vioneta/vioneta-irrigation-integration",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Vioneta/vioneta-irrigation-integration/issues",
+  "requirements": [
+    "crontab"
+  ],
+  "version": "2024.10.0"
+}
